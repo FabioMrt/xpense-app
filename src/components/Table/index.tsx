@@ -102,7 +102,7 @@ return(
                 <td className="px-6 py-4 whitespace-nowrap">
                    {t.description}
                 </td>
-                <td className="px-6 py-{4">
+                <td className="px-6 py-4">
                    {t.category?.name || "-"}
                 </td>
                 <td className="px-6 py-4">

@@ -6,13 +6,31 @@ Um aplicativo moderno de controle financeiro pessoal desenvolvido com Next.js, P
 
 ## 🚀 Funcionalidades Principais
 
-- ✅ **Autenticação com Google** - Login seguro via OAuth2
-- ✅ **Controle de Transações** - Adicione, edite e remova receitas e despesas
-- ✅ **Categorização** - Organize transações por categorias
-- ✅ **Relatórios Mensais** - Visualize seus gastos por mês
-- ✅ **Dashboard Interativo** - Cards com totais de entrada, saída e saldo
-- ✅ **Interface Responsiva** - Funciona perfeitamente em mobile e desktop
-- ✅ **Design Moderno** - UI/UX com Tailwind CSS e shadcn/ui
+### 🔐 Autenticação e Segurança
+- ✅ **Autenticação com Google OAuth2** - Login seguro e rápido
+- ✅ **Validação Robusta com Zod** - Dados sempre validados
+- ✅ **Proteção de Rotas** - Acesso controlado por sessão
+
+### 💰 Gestão Financeira
+- ✅ **CRUD Completo de Transações** - Crie, edite e remova receitas e despesas
+- ✅ **Categorização Inteligente** - Organize por categorias personalizadas
+- ✅ **Filtros Avançados** - Busque por descrição, tipo ou categoria
+- ✅ **Seletor de Período** - Navegue facilmente entre meses
+
+### 📊 Visualizações e Relatórios
+- ✅ **Dashboard Interativo** - Cards com métricas em tempo real
+- ✅ **Gráficos com Recharts** - Visualize tendências e padrões
+  - Gráfico de barras por categoria
+  - Gráfico de pizza para distribuição
+- ✅ **Relatório Detalhado** - Análise profunda por categoria
+- ✅ **Exportação de Dados** - Baixe em CSV ou imprima PDF
+
+### 🎨 Interface e Experiência
+- ✅ **Design Moderno** - UI/UX profissional com Tailwind CSS e shadcn/ui
+- ✅ **Dark Mode** - Tema escuro completo
+- ✅ **Responsivo** - Funciona perfeitamente em qualquer dispositivo
+- ✅ **Loading States** - Feedback visual em todas operações
+- ✅ **Notificações Toast** - Mensagens claras de sucesso/erro
 
 ## 🛠 Tecnologias Utilizadas
 
@@ -21,9 +39,12 @@ Um aplicativo moderno de controle financeiro pessoal desenvolvido com Next.js, P
 - **TypeScript** - Tipagem estática para maior segurança
 - **Tailwind CSS 4** - Framework de CSS utilitário
 - **shadcn/ui** - Componentes de UI modernos e acessíveis
+- **Recharts** - Biblioteca de gráficos responsivos
 - **Lucide React** - Ícones SVG otimizados
 - **React Hook Form** - Gerenciamento de formulários
 - **Sonner** - Notificações toast elegantes
+- **date-fns** - Manipulação de datas
+- **Zod** - Validação de schemas TypeScript-first
 
 ### Backend & Banco de Dados
 - **MongoDB** - Banco de dados NoSQL
@@ -192,11 +213,18 @@ src/
 ### Categorias
 - `GET /api/categories` - Lista todas as categorias
 
-### Transações
-- `GET /api/transactions?month=8` - Lista transações do mês
-- `POST /api/transactions` - Cria nova transação
-- `PUT /api/transactions` - Atualiza transação existente
-- `DELETE /api/transactions?id=123` - Remove transação
+### Transações (com validação Zod)
+- `GET /api/transactions?month=8&year=2024` - Lista transações com totais
+- `POST /api/transactions` - Cria nova transação (validada)
+- `PUT /api/transactions` - Atualiza transação (validada)
+- `DELETE /api/transactions?id=123` - Remove transação (com verificação de ownership)
+
+**Melhorias nas APIs:**
+- ✅ Validação completa com Zod
+- ✅ Mensagens de erro detalhadas
+- ✅ Verificação de permissões
+- ✅ Respostas padronizadas com `success` e `data`
+- ✅ Totais calculados no backend
 
 ## 📊 Schema do Banco de Dados
 
@@ -246,27 +274,49 @@ model Category {
 ## 🎨 Componentes Principais
 
 ### Header
-- Autenticação com Google
-- Avatar do usuário
+- Autenticação com Google OAuth
+- Avatar do usuário com fallback
+- Estados de loading/autenticado
 - Navegação responsiva
 
-### Dashboard
-- Cards com métricas financeiras
-- Seletor de mês
-- Tabela de transações
-- Modal para adicionar/editar transações
+### DashboardClient ⭐ (Novo!)
+- **Cards de Métricas** - Entradas, Saídas e Saldo
+- **Gráficos Interativos** - Visualizações com Recharts
+- **Relatório por Categoria** - Análise detalhada
+- **Filtros Avançados** - Busca e filtros em tempo real
+- **Exportação** - Botões para CSV e PDF
+- **Loading States** - Skeleton screens
+- **Estados Vazios** - Mensagens informativas
+
+### Charts (Novos Componentes!)
+- **TransactionChart** - Gráfico de barras comparativo
+- **CategoryPieChart** - Distribuição de despesas
+
+### CategoryReport ⭐ (Novo!)
+- Análise detalhada por categoria
+- Percentuais e médias
+- Barras de progresso
+- Contagem de transações
+
+### TransactionFilters ⭐ (Novo!)
+- Busca em tempo real com debounce
+- Filtro por tipo e categoria
+- Interface expansível
+- Indicadores de filtros ativos
 
 ### TransactionModal
-- Formulário completo para transações
-- Validação de campos
-- Seleção de categorias e tipos
-- Campos monetários formatados
+- Formulário validado
+- Calendar picker para datas
+- Seleção de categorias dinâmica
+- Input monetário formatado (R$)
+- Toast notifications
 
 ### Table
-- Listagem paginada de transações
-- Ações de editar/excluir
-- Formatação de moeda brasileira
-- Ícones para tipos de transação
+- Listagem com scroll infinito
+- Editar e excluir inline
+- Formatação BRL
+- Ícones de tipo coloridos
+- Modal de edição integrado
 
 ## 🚀 Scripts Disponíveis
 
