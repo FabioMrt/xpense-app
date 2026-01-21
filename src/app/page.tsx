@@ -41,7 +41,7 @@ export default function Home() {
   const benefitsInView = useInView(benefitsRef, { once: true, amount: 0.2 });
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/20 to-orange-50/20 dark:from-slate-950 dark:via-purple-950/20 dark:to-slate-950">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-purple-500 to-orange-500 dark:from-purple-900 dark:via-purple-800 dark:to-orange-600">
         {/* Padrão decorativo de fundo */}
@@ -49,7 +49,7 @@ export default function Home() {
           <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px'}} />
         </div>
         
-        <div className="relative container mx-auto px-4 py-20 lg:py-32">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <motion.div 
@@ -208,14 +208,14 @@ export default function Home() {
         {/* Wave Divider */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="currentColor" className="text-white dark:text-slate-900"/>
+            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="currentColor" className="text-white dark:text-gray-900"/>
           </svg>
         </div>
       </section>
 
       {/* Features Section */}
-      <section ref={featuresRef} className="py-20 lg:py-32 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+      <section ref={featuresRef} className="py-20 lg:py-32 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={featuresInView ? { opacity: 1, y: 0 } : {}}
@@ -288,7 +288,7 @@ export default function Home() {
                 variants={fadeInUp}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
               >
-                <Card className="h-full border-0 shadow-lg hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 group">
+                <Card className="h-full border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-300 group">
                   <CardHeader className="space-y-4">
                     <motion.div 
                       whileHover={{ rotate: 360, scale: 1.1 }}
@@ -312,8 +312,8 @@ export default function Home() {
       </section>
 
       {/* Screenshots Section */}
-      <section className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 to-purple-50/30 dark:from-slate-900 dark:to-purple-950/30">
-        <div className="container mx-auto px-4">
+      <section className="py-20 lg:py-32 bg-gray-50 dark:bg-gray-950">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -385,8 +385,8 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section ref={benefitsRef} className="py-20 lg:py-32 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+      <section ref={benefitsRef} className="py-20 lg:py-32 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -576,7 +576,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="relative container mx-auto px-4">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

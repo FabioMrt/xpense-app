@@ -160,70 +160,70 @@ export default function DashboardClient() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-orange-50/20 dark:from-slate-900 dark:via-purple-950/30 dark:to-slate-900 pb-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Header do Dashboard */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-purple-600 to-orange-500 text-white py-8 px-4 mb-8 shadow-xl"
-      >
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
-            <Wallet className="h-8 w-8" />
-            Dashboard Financeiro
-          </h1>
-          <p className="text-purple-100">
-            Controle total das suas finanças em um só lugar
-          </p>
+      <div className="bg-gradient-to-r from-purple-600 to-orange-500">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-white"
+          >
+            <h1 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
+              <Wallet className="h-8 w-8" />
+              Dashboard Financeiro
+            </h1>
+            <p className="text-white/90">
+              Controle total das suas finanças em um só lugar
+            </p>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Controles Principais */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          className="mb-6"
         >
-          <Card className="p-6 mb-6 shadow-lg border-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
-            <section className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-md">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+          <Card className="border-gray-200 dark:border-gray-800">
+            <CardContent className="p-6">
+              <section className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <SelectMes
+                    selectedMonth={selectedMonth}
+                    selectedYear={selectedYear}
+                    onMonthYearChange={handleMonthYearChange}
+                  />
                 </div>
-                <SelectMes
-                  selectedMonth={selectedMonth}
-                  selectedYear={selectedYear}
-                  onMonthYearChange={handleMonthYearChange}
-                />
-              </div>
 
-              <div className="flex flex-wrap items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleExportCSV}
-                  disabled={filteredTransactions.length === 0}
-                  className="hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-all duration-200"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  CSV
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleExportPDF}
-                  disabled={filteredTransactions.length === 0}
-                  className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  PDF
-                </Button>
-                <TransactionModal onTransactionChange={refreshTransactions} />
-              </div>
-            </section>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportCSV}
+                    disabled={filteredTransactions.length === 0}
+                    className="hover:bg-green-50 dark:hover:bg-green-950 hover:text-green-600 hover:border-green-300 transition-all duration-200"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    CSV
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportPDF}
+                    disabled={filteredTransactions.length === 0}
+                    className="hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    PDF
+                  </Button>
+                  <TransactionModal onTransactionChange={refreshTransactions} />
+                </div>
+              </section>
+            </CardContent>
           </Card>
         </motion.div>
 
@@ -399,12 +399,14 @@ export default function DashboardClient() {
           transition={{ delay: 0.7 }}
           className="mt-8"
         >
-          <Card className="border-0 shadow-lg bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
-            <CardHeader className="border-b border-slate-200 dark:border-slate-700">
+          <Card className="border-gray-200 dark:border-gray-800">
+            <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
-                    Transações do Mês
+                  <CardTitle className="text-2xl font-bold">
+                    <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+                      Transações do Mês
+                    </span>
                   </CardTitle>
                   <CardDescription className="mt-1">
                     {filteredTransactions.length !== transactions.length ? (
@@ -433,14 +435,14 @@ export default function DashboardClient() {
               )}
 
               {loading ? (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {[1, 2, 3].map((i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: i * 0.1 }}
-                      className="h-20 bg-gradient-to-r from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-600 rounded-lg animate-pulse"
+                      className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"
                     />
                   ))}
                 </div>
@@ -450,13 +452,13 @@ export default function DashboardClient() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-16"
                 >
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-100 to-orange-100 dark:from-purple-900/30 dark:to-orange-900/30 mb-4">
-                    <Wallet className="w-10 h-10 text-purple-600 dark:text-purple-400" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 mb-4">
+                    <Wallet className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     Nenhuma transação ainda
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 mb-6">
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">
                     Comece a controlar suas finanças adicionando sua primeira transação
                   </p>
                   <TransactionModal onTransactionChange={refreshTransactions} />
@@ -467,15 +469,15 @@ export default function DashboardClient() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-16"
                 >
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 mb-4">
-                    <svg className="w-10 h-10 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-900/20 mb-4">
+                    <svg className="w-8 h-8 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     Nenhum resultado encontrado
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400">
+                  <p className="text-gray-600 dark:text-gray-400">
                     Tente ajustar os filtros de busca para ver mais resultados
                   </p>
                 </motion.div>
