@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -10,303 +12,651 @@ import {
   Smartphone, 
   Users,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
+  Wallet,
+  LineChart,
+  Target,
+  Zap,
+  Star,
+  CreditCard
 } from "lucide-react";
-import financasImg from '../assets/financas.jpg';
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 60 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: "easeOut" }
+};
+
+const staggerChildren = {
+  animate: { transition: { staggerChildren: 0.1 } }
+};
 
 export default function Home() {
+  const featuresRef = useRef(null);
+  const benefitsRef = useRef(null);
+  const featuresInView = useInView(featuresRef, { once: true, amount: 0.2 });
+  const benefitsInView = useInView(benefitsRef, { once: true, amount: 0.2 });
+
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/20 to-orange-50/20 dark:from-slate-950 dark:via-purple-950/20 dark:to-slate-950">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950">
-        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-purple-500 to-orange-500 dark:from-purple-900 dark:via-purple-800 dark:to-orange-600">
+        {/* Padrão decorativo de fundo */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px'}} />
+        </div>
         
-        <div className="relative container mx-auto px-4 py-16 lg:py-24">
+        <div className="relative container mx-auto px-4 py-20 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
-            <div className="text-center lg:text-left space-y-8">
-              <div className="space-y-4">
-                <div className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-blue-700/20 dark:bg-blue-950 dark:text-blue-300 dark:ring-blue-300/20">
-                  <span className="flex h-2 w-2 rounded-full bg-blue-500 mr-2 animate-pulse" />
+            <motion.div 
+              initial="initial"
+              animate="animate"
+              variants={staggerChildren}
+              className="text-center lg:text-left space-y-8 text-white"
+            >
+              <motion.div variants={fadeInUp} className="space-y-6">
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                  className="inline-flex items-center rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-medium ring-1 ring-white/30"
+                >
+                  <Zap className="w-4 h-4 mr-2" />
                   Controle Financeiro Inteligente
-                </div>
+                </motion.div>
                 
-                <h1 className="text-4xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  Gerencie suas{" "}
-                  <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-                    finanças
+                <motion.h1 
+                  variants={fadeInUp}
+                  className="text-5xl lg:text-7xl font-bold tracking-tight"
+                >
+                  Domine suas{" "}
+                  <span className="relative">
+                    <span className="relative z-10 bg-gradient-to-r from-orange-200 to-yellow-200 bg-clip-text text-transparent">
+                      finanças
+                    </span>
+                    <motion.span
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.8, duration: 0.6 }}
+                      className="absolute bottom-2 left-0 w-full h-3 bg-orange-400/30 -z-10"
+                    />
                   </span>{" "}
                   com facilidade
-                </h1>
+                </motion.h1>
                 
-                <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl">
+                <motion.p 
+                  variants={fadeInUp}
+                  className="text-xl text-purple-100 max-w-2xl mx-auto lg:mx-0"
+                >
                   Transforme sua vida financeira com o XPensive Control. 
-                  Controle gastos, monitore economias e alcance seus objetivos financeiros 
-                  de forma simples e intuitiva.
-                </p>
-              </div>
+                  Controle gastos, monitore economias e alcance seus objetivos 
+                  com uma plataforma moderna e intuitiva.
+                </motion.p>
+              </motion.div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <Link href="/dashboard" className="flex items-center gap-2">
-                    Começar Agora
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
-                </Button>
+              <motion.div 
+                variants={fadeInUp}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button size="lg" className="text-lg px-8 py-6 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300">
+                    <Link href="/dashboard" className="flex items-center gap-2">
+                      Começar Agora - Grátis
+                      <ArrowRight className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                </motion.div>
                 
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-slate-300 hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-800">
-                  <BarChart3 className="h-5 w-5" />
-                  Ver Demo
-                </Button>
-              </div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
+                    <LineChart className="h-5 w-5 mr-2" />
+                    Ver Demonstração
+                  </Button>
+                </motion.div>
+              </motion.div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+              <motion.div 
+                variants={fadeInUp}
+                className="grid grid-cols-3 gap-8 pt-8"
+              >
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-slate-900 dark:text-white">100%</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Gratuito</div>
+                  <div className="text-3xl font-bold">100%</div>
+                  <div className="text-sm text-purple-200">Gratuito</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-slate-900 dark:text-white">24/7</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Disponível</div>
+                  <div className="text-3xl font-bold">10k+</div>
+                  <div className="text-sm text-purple-200">Usuários</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-slate-900 dark:text-white">⭐ 5.0</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Avaliação</div>
+                  <div className="flex items-center justify-center gap-1 text-3xl font-bold">
+                    <Star className="w-6 h-6 fill-yellow-300 text-yellow-300" />
+                    5.0
+                  </div>
+                  <div className="text-sm text-purple-200">Avaliação</div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            {/* Image */}
-            <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-50 to-violet-50 p-8 dark:from-blue-950 dark:to-violet-950">
+            {/* Image Section */}
+            <motion.div 
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src={financasImg}
-                  alt="Controle de Finanças"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto rounded-lg shadow-lg"
+                  src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80"
+                  alt="Dashboard de Finanças"
+                  width={700}
+                  height={500}
+                  className="w-full h-auto rounded-2xl"
                   priority
                 />
                 
-                {/* Floating Cards */}
-                <div className="absolute -top-4 -left-4 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-                      <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                {/* Floating Cards Animados */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
+                  className="absolute -top-6 -left-6 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
+                      <TrendingUp className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-slate-900 dark:text-white">Economia</div>
-                      <div className="text-lg font-bold text-green-600 dark:text-green-400">+15%</div>
+                      <div className="text-sm font-medium text-slate-600 dark:text-slate-400">Economia</div>
+                      <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">+28%</div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
                 
-                <div className="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                      <PiggyBank className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <motion.div 
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, type: "spring", stiffness: 100 }}
+                  className="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-orange-500 rounded-xl flex items-center justify-center">
+                      <Wallet className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-slate-900 dark:text-white">Meta</div>
-                      <div className="text-lg font-bold text-blue-600 dark:text-blue-400">R$ 2.5k</div>
+                      <div className="text-sm font-medium text-slate-600 dark:text-slate-400">Saldo</div>
+                      <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">R$ 12.5k</div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
+        </div>
+
+        {/* Wave Divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="currentColor" className="text-white dark:text-slate-900"/>
+          </svg>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 lg:py-24 bg-white dark:bg-slate-900">
+      <section ref={featuresRef} className="py-20 lg:py-32 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              Funcionalidades que fazem a diferença
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+                Funcionalidades
+              </span>{" "}
+              <span className="text-slate-900 dark:text-white">que fazem a diferença</span>
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-300">
+            <p className="text-xl text-slate-600 dark:text-slate-400">
               Descubra como o XPensive Control pode revolucionar sua gestão financeira
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature Cards */}
-            <Card className="border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-                  <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <CardTitle>Controle de Gastos</CardTitle>
-                <CardDescription>
-                  Monitore todos os seus gastos em tempo real com categorização automática e relatórios detalhados.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+          <motion.div 
+            initial="initial"
+            animate={featuresInView ? "animate" : "initial"}
+            variants={staggerChildren}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                icon: <BarChart3 className="h-7 w-7" />,
+                title: "Gráficos Interativos",
+                description: "Visualize seus dados com gráficos modernos e interativos. Entenda padrões de gastos facilmente.",
+                gradient: "from-purple-500 to-purple-600",
+                color: "purple"
+              },
+              {
+                icon: <Target className="h-7 w-7" />,
+                title: "Metas Inteligentes",
+                description: "Defina objetivos financeiros e acompanhe seu progresso em tempo real com alertas personalizados.",
+                gradient: "from-orange-500 to-orange-600",
+                color: "orange"
+              },
+              {
+                icon: <LineChart className="h-7 w-7" />,
+                title: "Análises Detalhadas",
+                description: "Relatórios completos por categoria, período e tipo. Insights que realmente fazem diferença.",
+                gradient: "from-green-500 to-emerald-600",
+                color: "green"
+              },
+              {
+                icon: <Shield className="h-7 w-7" />,
+                title: "Segurança Total",
+                description: "Autenticação Google OAuth2, validações robustas e proteção total dos seus dados financeiros.",
+                gradient: "from-blue-500 to-blue-600",
+                color: "blue"
+              },
+              {
+                icon: <Smartphone className="h-7 w-7" />,
+                title: "Mobile First",
+                description: "Interface 100% responsiva. Acesse de qualquer lugar, qualquer hora, qualquer dispositivo.",
+                gradient: "from-pink-500 to-rose-600",
+                color: "pink"
+              },
+              {
+                icon: <CreditCard className="h-7 w-7" />,
+                title: "Exportação de Dados",
+                description: "Exporte suas transações em CSV ou PDF. Compartilhe com seu contador facilmente.",
+                gradient: "from-indigo-500 to-purple-600",
+                color: "indigo"
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              >
+                <Card className="h-full border-0 shadow-lg hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 group">
+                  <CardHeader className="space-y-4">
+                    <motion.div 
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-${feature.color}-500/50`}
+                    >
+                      {feature.icon}
+                    </motion.div>
+                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                      {feature.title}
+                    </CardTitle>
+                    <CardDescription className="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {feature.description}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-            <Card className="border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
-                  <PiggyBank className="h-6 w-6 text-green-600 dark:text-green-400" />
-                </div>
-                <CardTitle>Metas de Economia</CardTitle>
-                <CardDescription>
-                  Defina objetivos financeiros e acompanhe seu progresso com visualizações motivadoras.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+      {/* Screenshots Section */}
+      <section className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 to-purple-50/30 dark:from-slate-900 dark:to-purple-950/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+              Interface{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+                Premium
+              </span>
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400">
+              Design moderno e profissional que facilita sua gestão financeira
+            </p>
+          </motion.div>
 
-            <Card className="border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
-                  <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+                  alt="Dashboard Analytics"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-2xl font-bold mb-2">Dashboard Completo</h3>
+                    <p className="text-white/90">Visualize tudo em um só lugar</p>
+                  </div>
                 </div>
-                <CardTitle>Análises Inteligentes</CardTitle>
-                <CardDescription>
-                  Insights personalizados sobre seus hábitos financeiros para tomar decisões mais inteligentes.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+              </div>
+            </motion.div>
 
-            <Card className="border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center mb-4">
-                  <Shield className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                  alt="Financial Charts"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <h3 className="text-2xl font-bold mb-2">Gráficos Avançados</h3>
+                    <p className="text-white/90">Análises visuais poderosas</p>
+                  </div>
                 </div>
-                <CardTitle>Segurança Total</CardTitle>
-                <CardDescription>
-                  Seus dados financeiros protegidos com criptografia de ponta e backup automático.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="w-12 h-12 bg-cyan-100 dark:bg-cyan-900 rounded-lg flex items-center justify-center mb-4">
-                  <Smartphone className="h-6 w-6 text-cyan-600 dark:text-cyan-400" />
-                </div>
-                <CardTitle>Acesso Mobile</CardTitle>
-                <CardDescription>
-                  Interface responsiva que funciona perfeitamente em qualquer dispositivo.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="h-6 w-6 text-red-600 dark:text-red-400" />
-                </div>
-                <CardTitle>Suporte 24/7</CardTitle>
-                <CardDescription>
-                  Equipe dedicada para ajudar você a aproveitar ao máximo todas as funcionalidades.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 lg:py-24 bg-slate-50 dark:bg-slate-800">
+      <section ref={benefitsRef} className="py-20 lg:py-32 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                Por que escolher o XPensive Control?
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={benefitsInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-8">
+                Por que escolher o{" "}
+                <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+                  XPensive Control
+                </span>
+                ?
               </h2>
               
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Interface Intuitiva</h3>
-                    <p className="text-slate-600 dark:text-slate-300">Design clean e fácil de usar, mesmo para quem não tem experiência com apps financeiros.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Relatórios Detalhados</h3>
-                    <p className="text-slate-600 dark:text-slate-300">Visualize seus gastos por categoria, período e receba insights valiosos sobre seus hábitos.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Controle Total</h3>
-                    <p className="text-slate-600 dark:text-slate-300">Tenha visibilidade completa das suas finanças e tome decisões baseadas em dados reais.</p>
-                  </div>
-                </div>
+                {[
+                  {
+                    icon: <Zap className="h-5 w-5" />,
+                    title: "Interface Premium",
+                    description: "Design moderno com animações suaves, gráficos interativos e experiência de uso excepcional."
+                  },
+                  {
+                    icon: <BarChart3 className="h-5 w-5" />,
+                    title: "Relatórios Poderosos",
+                    description: "Visualize seus gastos por categoria, compare períodos e exporte dados em CSV ou PDF."
+                  },
+                  {
+                    icon: <Shield className="h-5 w-5" />,
+                    title: "Segurança Garantida",
+                    description: "Autenticação OAuth2, validação de dados com Zod e proteção total das suas informações."
+                  },
+                  {
+                    icon: <Target className="h-5 w-5" />,
+                    title: "Controle Total",
+                    description: "Busca avançada, filtros inteligentes e gestão completa das suas finanças em tempo real."
+                  }
+                ].map((benefit, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={benefitsInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="flex items-start gap-4 group"
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white shadow-lg group-hover:shadow-purple-500/50 transition-all duration-300 group-hover:scale-110">
+                      {benefit.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2">{benefit.title}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{benefit.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
 
-              <div className="mt-8">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700">
-                  <Link href="/dashboard" className="flex items-center gap-2">
-                    Começar Gratuitamente
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="mt-10"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button size="lg" className="text-lg px-10 py-7 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300">
+                    <Link href="/dashboard" className="flex items-center gap-2">
+                      Começar Gratuitamente
+                      <ArrowRight className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                </motion.div>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
+                  ✨ Sem cartão de crédito. Sem taxa. 100% gratuito.
+                </p>
+              </motion.div>
+            </motion.div>
 
-            <div className="relative">
-              <div className="bg-gradient-to-br from-blue-500 to-violet-600 rounded-2xl p-8 shadow-2xl">
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">Saldo Total</span>
-                      <span className="text-2xl font-bold text-slate-900 dark:text-white">R$ 15.847,32</span>
-                    </div>
-                    
-                    <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                      <div className="h-full w-3/4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4 pt-4">
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-green-600 dark:text-green-400">+R$ 3.240</div>
-                        <div className="text-sm text-slate-600 dark:text-slate-400">Receitas</div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={benefitsInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80"
+                  alt="Gestão Financeira"
+                  width={700}
+                  height={500}
+                  className="w-full h-auto"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/40 to-transparent">
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.6, delay: 0.3 }}
+                      className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between text-white">
+                          <span className="text-sm font-medium">Saldo Disponível</span>
+                          <span className="text-3xl font-bold">R$ 18.547</span>
+                        </div>
+                        
+                        <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={benefitsInView ? { width: "75%" } : {}}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            className="h-full bg-gradient-to-r from-green-400 to-emerald-400 rounded-full"
+                          />
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4 pt-2">
+                          <div>
+                            <div className="text-2xl font-bold text-green-400">+R$ 4.8k</div>
+                            <div className="text-sm text-white/80">Receitas</div>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-orange-400">-R$ 2.3k</div>
+                            <div className="text-sm text-white/80">Despesas</div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-center">
-                        <div className="text-lg font-semibold text-red-600 dark:text-red-400">-R$ 1.856</div>
-                        <div className="text-sm text-slate-600 dark:text-slate-400">Gastos</div>
-                      </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
-            </div>
+
+              {/* Decorative Elements */}
+              <motion.div
+                animate={{ 
+                  y: [0, -20, 0],
+                  rotate: [0, 5, 0]
+                }}
+                transition={{ 
+                  duration: 5,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+                className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-400 to-orange-400 rounded-3xl opacity-20 blur-2xl"
+              />
+              <motion.div
+                animate={{ 
+                  y: [0, 20, 0],
+                  rotate: [0, -5, 0]
+                }}
+                transition={{ 
+                  duration: 7,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+                className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-orange-400 to-purple-400 rounded-3xl opacity-20 blur-2xl"
+              />
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-r from-blue-600 to-violet-600">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Pronto para transformar suas finanças?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Junte-se a milhares de usuários que já estão no controle de suas finanças
-          </p>
-          
-          <Button size="lg" variant="secondary" className="text-lg px-8 py-6 bg-white text-slate-900 hover:bg-slate-100">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              Começar Agora - É Gratuito
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-          </Button>
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-500 to-orange-500" />
+        
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-32 h-32 bg-white rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{
+                duration: 5 + Math.random() * 5,
+                repeat: Infinity,
+                delay: Math.random() * 2
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-4xl mx-auto"
+          >
+            <motion.div
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="inline-block mb-6"
+            >
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white font-medium">
+                <Star className="w-5 h-5 fill-yellow-300 text-yellow-300" />
+                <span>Avaliado 5.0 por nossos usuários</span>
+              </div>
+            </motion.div>
+
+            <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+              Pronto para transformar{" "}
+              <motion.span
+                animate={{ 
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+                className="inline-block bg-gradient-to-r from-orange-200 via-yellow-200 to-orange-200 bg-clip-text text-transparent"
+                style={{ backgroundSize: "200% 200%" }}
+              >
+                suas finanças
+              </motion.span>
+              ?
+            </h2>
+            
+            <p className="text-xl lg:text-2xl text-purple-100 mb-10 max-w-2xl mx-auto">
+              Junte-se a <strong>milhares de usuários</strong> que já estão no controle total de suas finanças
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button size="lg" className="text-xl px-12 py-8 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-white/50 transition-all duration-300 group">
+                  <Link href="/dashboard" className="flex items-center gap-2">
+                    Começar Agora - É Gratuito
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                    </motion.div>
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
+
+            <p className="text-purple-200 mt-6 text-sm">
+              ✨ Sem cartão de crédito • Sem taxa de cancelamento • 100% Gratuito
+            </p>
+
+            {/* Trust Badges */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="flex items-center justify-center gap-8 mt-12 flex-wrap"
+            >
+              {[
+                { icon: <Shield className="w-6 h-6" />, text: "Dados Seguros" },
+                { icon: <Zap className="w-6 h-6" />, text: "Setup em 2min" },
+                { icon: <Users className="w-6 h-6" />, text: "10k+ Usuários" }
+              ].map((badge, index) => (
+                <div key={index} className="flex items-center gap-2 text-white/90">
+                  {badge.icon}
+                  <span className="font-medium">{badge.text}</span>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </main>

@@ -87,7 +87,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const {searchParams} = new URL(request.url);
+  const {searchParams} = new URL(request.url);
     
     // Validação dos parâmetros de query
     const queryData = TransactionQuerySchema.parse({
@@ -96,21 +96,21 @@ export async function GET(request: Request) {
     });
 
     const { month, year } = queryData;
-    
-    const start = new Date(year, month - 1, 1);
-    const end = new Date(year, month, 1);
 
-    const transactions = await prisma.transaction.findMany({
-        where: {
-        userId: session.user.id,
-        date: {
-            gte: start,
-            lt: end,
-        },
-        },
-        orderBy: { date: "desc" },
-        include: { category: true },
-    });
+  const start = new Date(year, month - 1, 1);
+  const end = new Date(year, month, 1);
+
+        const transactions = await prisma.transaction.findMany({
+           where: {
+            userId: session.user.id,
+            date: {
+              gte: start,
+              lt: end,
+            },
+          },
+          orderBy: { date: "desc" },
+          include: { category: true },
+        });
     
     // Calcular totais
     const totals = transactions.reduce((acc, t) => {
@@ -165,10 +165,10 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    const {searchParams} = new URL(request.url);
-    const transactionId = searchParams.get("id");
+  const {searchParams} = new URL(request.url);
+  const transactionId = searchParams.get("id");
 
-    if (!transactionId) {
+  if (!transactionId) {
       return NextResponse.json({ 
         error: "ID da transação não fornecido" 
       }, { status: 400 });
@@ -183,7 +183,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ 
         error: "Transação não encontrada" 
       }, { status: 404 });
-    }
+  }
 
     if (existingTransaction.userId !== session.user.id) {
       return NextResponse.json({ 
@@ -219,7 +219,7 @@ export async function PUT(request: Request){
   }
 
   try {
-    const body = await request.json();
+  const body = await request.json();
     
     // Validação com Zod
     const validatedData = UpdateTransactionSchema.parse(body);
@@ -240,9 +240,9 @@ export async function PUT(request: Request){
       return NextResponse.json({ 
         error: "Você não tem permissão para editar esta transação" 
       }, { status: 403 });
-    }
+  }
 
-    const categoriaExistente = await prisma.category.findFirst({
+     const categoriaExistente = await prisma.category.findFirst({
       where: { name: category }
     });
 
