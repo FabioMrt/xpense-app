@@ -9,7 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowDownCircle, ArrowUpCircle, DollarSign, Download, FileText, TrendingUp, Wallet, PiggyBank } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, DollarSign, Download, FileText, TrendingUp, Wallet, PiggyBank, Sparkles } from "lucide-react";
+import Link from "next/link";
 import SelectMes from "@/components/SelectMes";
 import TransactionModal from "@/components/TransactionModal";
 import TableTransactions from "@/components/Table";
@@ -160,27 +161,24 @@ export default function DashboardClient() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Header do Dashboard */}
-      <div className="bg-gradient-to-r from-purple-600 to-orange-500">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-white"
-          >
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
-              <Wallet className="h-8 w-8" />
-              Dashboard Financeiro
-            </h1>
-            <p className="text-white/90">
-              Controle total das suas finanças em um só lugar
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Header do Dashboard */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 ml-[-4px]"
+        >
+          <h1 className="text-2xl md:text-3xl font-bold mb-1 flex items-center gap-3 text-gray-900 dark:text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-orange-500 shadow-lg">
+              <Wallet className="h-5 w-5 text-white" />
+            </div>
+            Dashboard Financeiro
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 ml-[52px]">
+            Controle total das suas finanças em um só lugar
+          </p>
+        </motion.div>
         {/* Controles Principais */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -188,8 +186,8 @@ export default function DashboardClient() {
           transition={{ delay: 0.1 }}
           className="mb-6"
         >
-          <Card className="border-gray-200 dark:border-gray-800">
-            <CardContent className="p-6">
+          <Card className="border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50">
+            <CardContent className="p-4">
               <section className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <SelectMes
@@ -205,7 +203,7 @@ export default function DashboardClient() {
                     size="sm"
                     onClick={handleExportCSV}
                     disabled={filteredTransactions.length === 0}
-                    className="hover:bg-green-50 dark:hover:bg-green-950 hover:text-green-600 hover:border-green-300 transition-all duration-200"
+                    className="hover:bg-green-50 dark:hover:bg-green-950 hover:text-green-600 dark:hover:text-green-400 hover:border-green-300 transition-all duration-200"
                   >
                     <Download className="h-4 w-4 mr-2" />
                     CSV
@@ -215,12 +213,16 @@ export default function DashboardClient() {
                     size="sm"
                     onClick={handleExportPDF}
                     disabled={filteredTransactions.length === 0}
-                    className="hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
+                    className="hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-300 transition-all duration-200"
                   >
                     <FileText className="h-4 w-4 mr-2" />
                     PDF
                   </Button>
-                  <TransactionModal onTransactionChange={refreshTransactions} />
+                  <TransactionModal 
+                    onTransactionChange={refreshTransactions}
+                    selectedMonth={selectedMonth}
+                    selectedYear={selectedYear}
+                  />
                 </div>
               </section>
             </CardContent>
@@ -228,7 +230,7 @@ export default function DashboardClient() {
         </motion.div>
 
         {/* Cards de métricas - Versão Premium */}
-        <section className="grid grid-cols-1 gap-6 md:grid-cols-3 mt-6">
+        <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Card de Entradas */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -243,27 +245,27 @@ export default function DashboardClient() {
                 <TrendingUp className="w-32 h-32" />
               </div>
               
-              <CardHeader className="relative z-10">
+              <CardHeader className="relative z-10 pb-2">
                 <div className="flex items-center justify-between">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <ArrowUpCircle className="w-6 h-6" />
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <ArrowUpCircle className="w-5 h-5" />
                   </div>
                   <div className="text-right">
-                    <CardTitle className="text-sm font-medium text-green-100">
+                    <CardTitle className="text-xs font-medium text-green-100">
                       Entradas
                     </CardTitle>
-                    <p className="text-xs text-green-200 mt-1">
+                    <p className="text-[10px] text-green-200 mt-0.5">
                       Receitas do mês
                     </p>
                   </div>
                 </div>
               </CardHeader>
 
-              <CardContent className="relative z-10">
-                <p className="text-3xl md:text-4xl font-bold tracking-tight">
+              <CardContent className="relative z-10 pt-0">
+                <p className="text-2xl md:text-3xl font-bold tracking-tight">
                   R$ <CountUp end={entradaTotal} decimals={2} decimal="," separator="." duration={1.5} />
                 </p>
-                <p className="text-sm text-green-100 mt-2">
+                <p className="text-xs text-green-100 mt-1">
                   {transactions.filter(t => t.type === "ENTRADA").length} transações
                 </p>
               </CardContent>
@@ -284,27 +286,27 @@ export default function DashboardClient() {
                 <ArrowDownCircle className="w-32 h-32" />
               </div>
               
-              <CardHeader className="relative z-10">
+              <CardHeader className="relative z-10 pb-2">
                 <div className="flex items-center justify-between">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <ArrowDownCircle className="w-6 h-6" />
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <ArrowDownCircle className="w-5 h-5" />
                   </div>
                   <div className="text-right">
-                    <CardTitle className="text-sm font-medium text-red-100">
+                    <CardTitle className="text-xs font-medium text-red-100">
                       Saídas
                     </CardTitle>
-                    <p className="text-xs text-red-200 mt-1">
+                    <p className="text-[10px] text-red-200 mt-0.5">
                       Despesas do mês
                     </p>
                   </div>
                 </div>
               </CardHeader>
 
-              <CardContent className="relative z-10">
-                <p className="text-3xl md:text-4xl font-bold tracking-tight">
+              <CardContent className="relative z-10 pt-0">
+                <p className="text-2xl md:text-3xl font-bold tracking-tight">
                   R$ <CountUp end={saidaTotal} decimals={2} decimal="," separator="." duration={1.5} />
                 </p>
-                <p className="text-sm text-red-100 mt-2">
+                <p className="text-xs text-red-100 mt-1">
                   {transactions.filter(t => t.type === "SAIDA").length} transações
                 </p>
               </CardContent>
@@ -329,27 +331,27 @@ export default function DashboardClient() {
                 <PiggyBank className="w-32 h-32" />
               </div>
               
-              <CardHeader className="relative z-10">
+              <CardHeader className="relative z-10 pb-2">
                 <div className="flex items-center justify-between">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <PiggyBank className="w-6 h-6" />
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <PiggyBank className="w-5 h-5" />
                   </div>
                   <div className="text-right">
-                    <CardTitle className="text-sm font-medium text-blue-100">
+                    <CardTitle className="text-xs font-medium text-blue-100">
                       Saldo
                     </CardTitle>
-                    <p className="text-xs text-blue-200 mt-1">
+                    <p className="text-[10px] text-blue-200 mt-0.5">
                       {saldo >= 0 ? 'Positivo' : 'Negativo'}
                     </p>
                   </div>
                 </div>
               </CardHeader>
 
-              <CardContent className="relative z-10">
-                <p className="text-3xl md:text-4xl font-bold tracking-tight">
+              <CardContent className="relative z-10 pt-0">
+                <p className="text-2xl md:text-3xl font-bold tracking-tight">
                   R$ <CountUp end={saldo} decimals={2} decimal="," separator="." duration={1.5} />
                 </p>
-                <p className="text-sm text-blue-100 mt-2">
+                <p className="text-xs text-blue-100 mt-1">
                   {saldo >= 0 ? '🎉 Economia garantida!' : '⚠️ Atenção aos gastos'}
                 </p>
               </CardContent>
@@ -364,7 +366,7 @@ export default function DashboardClient() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6"
             >
               <motion.div
                 whileHover={{ scale: 1.01 }}
@@ -385,7 +387,7 @@ export default function DashboardClient() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mt-6"
+              className="mt-4"
             >
               <CategoryReport transactions={transactions} />
             </motion.section>
@@ -397,18 +399,16 @@ export default function DashboardClient() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="mt-8"
+          className="mt-6"
         >
-          <Card className="border-gray-200 dark:border-gray-800">
-            <CardHeader>
+          <Card className="border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50">
+            <CardHeader className="border-b border-gray-200 dark:border-gray-700/50 py-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-2xl font-bold">
-                    <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
-                      Transações do Mês
-                    </span>
+                  <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">
+                    Transações do Mês
                   </CardTitle>
-                  <CardDescription className="mt-1">
+                  <CardDescription className="text-gray-600 dark:text-gray-400">
                     {filteredTransactions.length !== transactions.length ? (
                       <span>
                         Mostrando <strong>{filteredTransactions.length}</strong> de{" "}
@@ -424,9 +424,9 @@ export default function DashboardClient() {
               </div>
             </CardHeader>
 
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               {!loading && transactions.length > 0 && (
-                <div className="mb-6">
+                <div className="mb-4">
                   <TransactionFilters
                     onFilterChange={handleFilterChange}
                     categories={categories}
@@ -450,7 +450,7 @@ export default function DashboardClient() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-16"
+                  className="text-center py-12"
                 >
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 mb-4">
                     <Wallet className="w-8 h-8 text-purple-600 dark:text-purple-400" />
@@ -461,13 +461,17 @@ export default function DashboardClient() {
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
                     Comece a controlar suas finanças adicionando sua primeira transação
                   </p>
-                  <TransactionModal onTransactionChange={refreshTransactions} />
+                  <TransactionModal 
+                    onTransactionChange={refreshTransactions}
+                    selectedMonth={selectedMonth}
+                    selectedYear={selectedYear}
+                  />
                 </motion.div>
               ) : filteredTransactions.length === 0 ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-16"
+                  className="text-center py-12"
                 >
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-900/20 mb-4">
                     <svg className="w-8 h-8 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

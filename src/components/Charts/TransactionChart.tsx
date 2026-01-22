@@ -81,15 +81,15 @@ export function TransactionChart({ transactions }: Props) {
 
   if (categoryData.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Transações por Categoria</CardTitle>
-          <CardDescription>
+      <Card className="border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg text-gray-900 dark:text-white">Transações por Categoria</CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
             Visualize suas receitas e despesas por categoria
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px] flex items-center justify-center text-slate-500">
+          <div className="h-[280px] flex items-center justify-center text-gray-500 dark:text-gray-400">
             <p>Nenhum dado disponível para este período</p>
           </div>
         </CardContent>
@@ -98,15 +98,15 @@ export function TransactionChart({ transactions }: Props) {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Transações por Categoria</CardTitle>
-        <CardDescription>
+    <Card className="border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg text-gray-900 dark:text-white">Transações por Categoria</CardTitle>
+        <CardDescription className="text-gray-600 dark:text-gray-400">
           Visualize suas receitas e despesas por categoria
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
+      <CardContent className="pt-0">
+        <ResponsiveContainer width="100%" height={280}>
           <BarChart data={categoryData}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
             <XAxis

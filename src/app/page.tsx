@@ -154,7 +154,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative"
+              className="relative p-8"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <Image
@@ -165,42 +165,42 @@ export default function Home() {
                   className="w-full h-auto rounded-2xl"
                   priority
                 />
-                
-                {/* Floating Cards Animados */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
-                  className="absolute -top-6 -left-6 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
-                      <TrendingUp className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-slate-600 dark:text-slate-400">Economia</div>
-                      <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">+28%</div>
-                    </div>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, type: "spring", stiffness: 100 }}
-                  className="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-orange-500 rounded-xl flex items-center justify-center">
-                      <Wallet className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-slate-600 dark:text-slate-400">Saldo</div>
-                      <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">R$ 12.5k</div>
-                    </div>
-                  </div>
-                </motion.div>
               </div>
+              
+              {/* Floating Cards Animados - Externos à imagem */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
+                className="absolute top-2 left-2 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-600 dark:text-slate-400">Economia</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">+28%</div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, type: "spring", stiffness: 100 }}
+                className="absolute bottom-2 right-2 bg-white dark:bg-slate-800 rounded-xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-orange-500 rounded-xl flex items-center justify-center">
+                    <Wallet className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-600 dark:text-slate-400">Saldo</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">R$ 12.5k</div>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -554,26 +554,53 @@ export default function Home() {
         
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-10">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-32 h-32 bg-white rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                scale: [1, 1.2, 1],
-                opacity: [0.1, 0.3, 0.1]
-              }}
-              transition={{
-                duration: 5 + Math.random() * 5,
-                repeat: Infinity,
-                delay: Math.random() * 2
-              }}
-            />
-          ))}
+          {[...Array(20)].map((_, i) => {
+            // Posições fixas para evitar erro de hidratação
+            const positions = [
+              { left: 10, top: 20 },
+              { left: 25, top: 50 },
+              { left: 40, top: 15 },
+              { left: 55, top: 70 },
+              { left: 70, top: 30 },
+              { left: 85, top: 60 },
+              { left: 15, top: 80 },
+              { left: 30, top: 35 },
+              { left: 45, top: 90 },
+              { left: 60, top: 45 },
+              { left: 75, top: 25 },
+              { left: 90, top: 75 },
+              { left: 5, top: 55 },
+              { left: 35, top: 10 },
+              { left: 50, top: 65 },
+              { left: 65, top: 40 },
+              { left: 80, top: 85 },
+              { left: 20, top: 70 },
+              { left: 95, top: 35 },
+              { left: 12, top: 45 },
+            ];
+            const pos = positions[i % positions.length];
+            
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-32 h-32 bg-white rounded-full"
+                style={{
+                  left: `${pos.left}%`,
+                  top: `${pos.top}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  scale: [1, 1.2, 1],
+                  opacity: [0.1, 0.3, 0.1]
+                }}
+                transition={{
+                  duration: 5 + (i % 5),
+                  repeat: Infinity,
+                  delay: i * 0.2
+                }}
+              />
+            );
+          })}
         </div>
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">

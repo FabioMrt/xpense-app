@@ -1,21 +1,19 @@
-import { Container } from "@/components/Container";
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import DashboardClient from "@/components/DashboardClient";
+import DashboardClientV2 from "@/components/DashboardClientV2";
 
-export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Dashboard - XPensive Control",
+  description: "Dashboard executivo de controle financeiro",
+};
 
-export default async function Dashboard() {
+export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session || !session.user) {
+  if (!session) {
     redirect("/");
   }
 
-  return (
-    <Container>
-      <DashboardClient />
-    </Container>
-  );
+  return <DashboardClientV2 />;
 }

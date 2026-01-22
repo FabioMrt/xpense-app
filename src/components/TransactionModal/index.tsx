@@ -51,10 +51,12 @@ date: string;
 type Props = {
 transaction?: Transaction;
 onTransactionChange?: () => void;
+selectedMonth?: number;
+selectedYear?: number;
 };
 
 
-export default function TransactionModal({ transaction, onTransactionChange }: Props) {
+export default function TransactionModal({ transaction, onTransactionChange, selectedMonth, selectedYear }: Props) {
   const [open, setOpen] = useState(false);
 const [categorias, setCategorias] = useState<Categoria[]>([]);
 const [categoriaSelecionada, setCategoriaSelecionada] = useState(transaction?.category.name || "");
@@ -88,10 +90,18 @@ transaction ? new Date(transaction.date) : new Date()
       setValor("");
       setTipo("ENTRADA");
       setCategoriaSelecionada("");
-      setDataTransacao(new Date());
+      
+      // Definir data com base no mês/ano selecionado ou data atual
+      if (selectedMonth && selectedYear) {
+        // Criar data com o primeiro dia do mês selecionado
+        const defaultDate = new Date(selectedYear, selectedMonth - 1, 1);
+        setDataTransacao(defaultDate);
+      } else {
+        setDataTransacao(new Date());
+      }
     }
   }
-}, [open, transaction]);
+}, [open, transaction, selectedMonth, selectedYear]);
 
 
   const router = useRouter();

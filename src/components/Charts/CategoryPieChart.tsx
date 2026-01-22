@@ -42,19 +42,21 @@ export function CategoryPieChart({ transactions, type }: Props) {
   const data = useMemo(() => {
     const aggregated: Record<string, number> = {};
 
-    transactions
-      .filter((t) => t.type === type)
-      .forEach((t) => {
-        const categoryName = t.category?.name || "Sem Categoria";
-        aggregated[categoryName] = (aggregated[categoryName] || 0) + t.value;
-      });
+    const filteredTransactions = transactions.filter((t) => t.type === type);
+    
+    filteredTransactions.forEach((t) => {
+      const categoryName = t.category?.name || "Sem Categoria";
+      aggregated[categoryName] = (aggregated[categoryName] || 0) + t.value;
+    });
 
-    return Object.entries(aggregated)
+    const result = Object.entries(aggregated)
       .map(([name, value]) => ({
         name,
         value,
       }))
       .sort((a, b) => b.value - a.value);
+    
+    return result;
   }, [transactions, type]);
 
   const total = useMemo(() => {
@@ -86,17 +88,17 @@ export function CategoryPieChart({ transactions, type }: Props) {
 
   if (data.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>
+      <Card className="border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg text-gray-900 dark:text-white">
             {type === "ENTRADA" ? "Entradas" : "Saídas"} por Categoria
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
             Distribuição de {type === "ENTRADA" ? "receitas" : "despesas"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px] flex items-center justify-center text-slate-500">
+          <div className="h-[280px] flex items-center justify-center text-gray-500 dark:text-gray-400">
             <p>
               Nenhuma {type === "ENTRADA" ? "entrada" : "saída"} neste período
             </p>
@@ -107,29 +109,27 @@ export function CategoryPieChart({ transactions, type }: Props) {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
+    <Card className="border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg text-gray-900 dark:text-white">
           {type === "ENTRADA" ? "Entradas" : "Saídas"} por Categoria
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-600 dark:text-gray-400">
           Distribuição de {type === "ENTRADA" ? "receitas" : "despesas"}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
+      <CardContent className="pt-0">
+        <ResponsiveContainer width="100%" height={280}>
           <PieChart>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              labelLine={false}
-              label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
-              }
               outerRadius={80}
+              innerRadius={30}
               fill="#8884d8"
               dataKey="value"
+              paddingAngle={2}
             >
               {data.map((entry, index) => (
                 <Cell
@@ -143,14 +143,14 @@ export function CategoryPieChart({ transactions, type }: Props) {
         </ResponsiveContainer>
 
         {/* Legend customizada com valores */}
-        <div className="mt-4 grid grid-cols-2 gap-2">
+        <div className="mt-3 grid grid-cols-2 gap-1.5">
           {data.map((item, index) => (
-            <div key={item.name} className="flex items-center gap-2 text-sm">
+            <div key={item.name} className="flex items-center gap-1.5 text-xs">
               <div
-                className="w-3 h-3 rounded-full"
+                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
               />
-              <span className="text-slate-700 dark:text-slate-300 truncate">
+              <span className="text-gray-700 dark:text-gray-300 truncate">
                 {item.name}:{" "}
                 <span className="font-semibold">
                   {item.value.toLocaleString("pt-BR", {
