@@ -23,6 +23,8 @@ import {
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -39,9 +41,52 @@ export default function Home() {
   const benefitsRef = useRef(null);
   const featuresInView = useInView(featuresRef, { once: true, amount: 0.2 });
   const benefitsInView = useInView(benefitsRef, { once: true, amount: 0.2 });
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  // Redireciona automaticamente se estiver autenticado (opcional - pode comentar se preferir mostrar banner)
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.push("/dashboard");
+  //   }
+  // }, [status, router]);
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      {/* Banner para usuários autenticados */}
+      {status === "authenticated" && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative bg-gradient-to-r from-purple-600 to-orange-500 text-white"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-10 h-10 bg-white/20 rounded-full">
+                  <CheckCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="font-semibold">Bem-vindo de volta, {session?.user?.name?.split(" ")[0]}! 👋</p>
+                  <p className="text-sm text-white/90">Acesse seu dashboard para gerenciar suas finanças</p>
+                </div>
+              </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  onClick={() => router.push("/dashboard")}
+                  className="bg-white text-purple-600 hover:bg-purple-50 font-semibold shadow-lg hover:shadow-xl transition-all"
+                >
+                  Ir para Dashboard
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      )}
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-purple-500 to-orange-500 dark:from-purple-900 dark:via-purple-800 dark:to-orange-600">
         {/* Padrão decorativo de fundo */}
@@ -107,22 +152,32 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button size="lg" className="text-lg px-8 py-6 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300">
-                    <Link href="/dashboard" className="flex items-center gap-2">
-                      Começar Agora - Grátis
-                      <ArrowRight className="h-5 w-5" />
-                    </Link>
-                  </Button>
+                  {status === "authenticated" ? (
+                    <Button 
+                      size="lg" 
+                      className="text-lg px-8 py-6 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300"
+                      onClick={() => router.push("/dashboard")}
+                    >
+                      <span className="flex items-center gap-2">
+                        Acessar Dashboard
+                        <ArrowRight className="h-5 w-5" />
+                      </span>
+                    </Button>
+                  ) : (
+                    <Button size="lg" className="text-lg px-8 py-6 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300">
+                      <Link href="/dashboard" className="flex items-center gap-2">
+                        Começar Agora - Grátis
+                        <ArrowRight className="h-5 w-5" />
+                      </Link>
+                    </Button>
+                  )}
                 </motion.div>
                 
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
-                    <LineChart className="h-5 w-5 mr-2" />
-                    Ver Demonstração
-                  </Button>
+                  
                 </motion.div>
               </motion.div>
 
@@ -452,12 +507,25 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button size="lg" className="text-lg px-10 py-7 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300">
-                    <Link href="/dashboard" className="flex items-center gap-2">
-                      Começar Gratuitamente
-                      <ArrowRight className="h-5 w-5" />
-                    </Link>
-                  </Button>
+                  {status === "authenticated" ? (
+                    <Button 
+                      size="lg" 
+                      className="text-lg px-10 py-7 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300"
+                      onClick={() => router.push("/dashboard")}
+                    >
+                      <span className="flex items-center gap-2">
+                        Acessar Dashboard
+                        <ArrowRight className="h-5 w-5" />
+                      </span>
+                    </Button>
+                  ) : (
+                    <Button size="lg" className="text-lg px-10 py-7 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300">
+                      <Link href="/dashboard" className="flex items-center gap-2">
+                        Começar Gratuitamente
+                        <ArrowRight className="h-5 w-5" />
+                      </Link>
+                    </Button>
+                  )}
                 </motion.div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">
                   ✨ Sem cartão de crédito. Sem taxa. 100% gratuito.
@@ -646,17 +714,35 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button size="lg" className="text-xl px-12 py-8 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-white/50 transition-all duration-300 group">
-                  <Link href="/dashboard" className="flex items-center gap-2">
-                    Começar Agora - É Gratuito
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
-                    </motion.div>
-                  </Link>
-                </Button>
+                {status === "authenticated" ? (
+                  <Button 
+                    size="lg" 
+                    className="text-xl px-12 py-8 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-white/50 transition-all duration-300 group"
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    <span className="flex items-center gap-2">
+                      Acessar Dashboard
+                      <motion.div
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                      </motion.div>
+                    </span>
+                  </Button>
+                ) : (
+                  <Button size="lg" className="text-xl px-12 py-8 bg-white text-purple-600 hover:bg-purple-50 shadow-2xl hover:shadow-white/50 transition-all duration-300 group">
+                    <Link href="/dashboard" className="flex items-center gap-2">
+                      Começar Agora - É Gratuito
+                      <motion.div
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                      </motion.div>
+                    </Link>
+                  </Button>
+                )}
               </motion.div>
             </div>
 

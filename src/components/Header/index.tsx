@@ -67,22 +67,37 @@ import { ThemeToggle } from "@/components/ThemeToggle"
 
                 {status === "authenticated" && (
                     <div className="flex gap-3 items-center">
-                        <Avatar className="h-10 w-10 border-2 border-purple-200 dark:border-purple-800">
-                            <AvatarImage 
-                                src={session?.user?.image || ""} 
-                                alt={session?.user?.name || "User"}
-                                referrerPolicy="no-referrer"
-                            />
-                            <AvatarFallback className="bg-gradient-to-br from-purple-500 to-orange-500 text-white font-semibold">
-                                {getInitials(session?.user?.name)}
-                            </AvatarFallback>
-                        </Avatar>
+                        {/* Botão Dashboard - Mais visível */}
+                        <Link 
+                            href="/dashboard" 
+                            className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
+                        >
+                            <FiUser size={18} />
+                            <span>Dashboard</span>
+                        </Link>
                         
                         <div className="flex items-center gap-3">
-                            <span className="text-gray-700 dark:text-gray-300 text-sm font-medium hidden md:block max-w-[150px] truncate">
+                            <Avatar className="h-10 w-10 border-2 border-purple-200 dark:border-purple-800 cursor-pointer hover:ring-2 hover:ring-purple-400 transition-all">
+                                <AvatarImage 
+                                    src={session?.user?.image || ""} 
+                                    alt={session?.user?.name || "User"}
+                                    referrerPolicy="no-referrer"
+                                />
+                                <AvatarFallback className="bg-gradient-to-br from-purple-500 to-orange-500 text-white font-semibold">
+                                    {getInitials(session?.user?.name)}
+                                </AvatarFallback>
+                            </Avatar>
+                            
+                            <span className="text-gray-700 dark:text-gray-300 text-sm font-medium hidden lg:block max-w-[150px] truncate">
                                 {session?.user?.name}
                             </span>
-                            <Link href="/dashboard" className="hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-lg transition-colors">
+                            
+                            {/* Botão Dashboard Mobile */}
+                            <Link 
+                                href="/dashboard" 
+                                className="sm:hidden hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-lg transition-colors"
+                                title="Dashboard"
+                            >
                                 <FiUser size={20} className="text-gray-600 dark:text-gray-400"/>
                             </Link>
 

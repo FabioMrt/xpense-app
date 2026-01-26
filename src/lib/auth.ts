@@ -24,6 +24,20 @@ export const authOptions: AuthOptions = {
                     email: string
                 }
                 return session;
+            },
+            async signIn({ user, account, profile }) {
+                return true;
+            },
+            async redirect({ url, baseUrl }) {
+                // Se o usuário está tentando acessar a página inicial após login, redireciona para o dashboard
+                if (url === baseUrl || url === `${baseUrl}/`) {
+                    return `${baseUrl}/dashboard`;
+                }
+                // Permite redirecionamentos relativos
+                if (url.startsWith("/")) return `${baseUrl}${url}`;
+                // Permite redirecionamentos para o mesmo domínio
+                if (new URL(url).origin === baseUrl) return url;
+                return baseUrl;
             }
         }
 
