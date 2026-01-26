@@ -188,7 +188,7 @@ transaction ? new Date(transaction.date) : new Date()
             <Calendar
               mode="single"
               selected={dataTransacao}
-              onSelect={setDataTransacao}
+              onSelect={(date) => setDataTransacao(date)}
               initialFocus
             />
           </PopoverContent>

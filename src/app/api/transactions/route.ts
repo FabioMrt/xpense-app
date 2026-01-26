@@ -1,10 +1,9 @@
-import { Category } from './../../../generated/prisma/index.d';
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import prisma from '@/lib/prisma';
 import { TransactionSchema, UpdateTransactionSchema, TransactionQuerySchema } from '@/lib/validations/transaction';
-import { ZodError } from 'zod';
+import { ZodError, ZodIssue } from 'zod';
 
 
 export async function POST (request: Request) {
@@ -62,7 +61,7 @@ export async function POST (request: Request) {
     if (error instanceof ZodError) {
       return NextResponse.json({ 
         error: "Dados inválidos",
-        details: error.errors.map(e => ({
+        details: error.issues.map((e: ZodIssue) => ({
           field: e.path.join('.'),
           message: e.message
         }))
@@ -140,7 +139,7 @@ export async function GET(request: Request) {
         if (error instanceof ZodError) {
           return NextResponse.json({ 
             error: "Parâmetros inválidos",
-            details: error.errors.map(e => ({
+            details: error.issues.map((e: ZodIssue) => ({
               field: e.path.join('.'),
               message: e.message
             }))
@@ -279,7 +278,7 @@ export async function PUT(request: Request){
     if (error instanceof ZodError) {
       return NextResponse.json({ 
         error: "Dados inválidos",
-        details: error.errors.map(e => ({
+        details: error.issues.map((e: ZodIssue) => ({
           field: e.path.join('.'),
           message: e.message
         }))

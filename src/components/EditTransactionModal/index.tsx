@@ -61,7 +61,7 @@ export default function EditTransactionModal({
   );
   const [tipo, setTipo] = useState<Transaction["type"]>(transaction.type);
   const [descricao, setDescricao] = useState(transaction.description);
-  const [dataTransacao, setDataTransacao] = useState<Date>(new Date(transaction.date));
+  const [dataTransacao, setDataTransacao] = useState<Date | undefined>(new Date(transaction.date));
 
   async function fetchCategorias() {
     const res = await fetch("/api/categories");
@@ -84,13 +84,28 @@ export default function EditTransactionModal({
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
+    // Converter valor formatado para número
+    // Remove o prefixo "R$ " se existir, remove todos os pontos (separadores de milhares) e substitui vírgula por ponto
+    const valorLimpo = valor.replace(/R\$\s?/g, "").replace(/\./g, "").replace(",", ".");
+    const valorNumerico = parseFloat(valorLimpo);
+
+    if (isNaN(valorNumerico) || valorNumerico <= 0) {
+      toast.error("Valor inválido. Por favor, insira um valor maior que zero.");
+      return;
+    }
+
+    if (!dataTransacao) {
+      toast.error("Data da transação é obrigatória.");
+      return;
+    }
+
     const payload = {
       id: transaction.id,
       description: descricao,
-      value: parseFloat(valor.replace(".", "").replace(",", ".")),
+      value: valorNumerico,
       type: tipo,
       category: categoriaSelecionada,
-      date: dataTransacao?.toISOString(),
+      date: dataTransacao.toISOString(),
     };
 
     try {
@@ -152,7 +167,7 @@ export default function EditTransactionModal({
                     <Calendar
                       mode="single"
                       selected={dataTransacao}
-                      onSelect={setDataTransacao}
+                      onSelect={(date) => setDataTransacao(date)}
                       initialFocus
                     />
                   </PopoverContent>

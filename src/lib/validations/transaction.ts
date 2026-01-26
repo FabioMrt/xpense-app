@@ -11,9 +11,7 @@ export const TransactionSchema = z.object({
     .refine((val) => !isNaN(val) && val > 0, {
       message: "Valor deve ser maior que zero",
     }),
-  type: z.enum(["ENTRADA", "SAIDA"], {
-    errorMap: () => ({ message: "Tipo deve ser ENTRADA ou SAIDA" }),
-  }),
+  type: z.enum(["ENTRADA", "SAIDA"]),
   category: z.string().min(1, "Categoria é obrigatória"),
   date: z
     .union([z.string(), z.date()])
