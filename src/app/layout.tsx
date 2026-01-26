@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "XPensive Control",
+  title: "XPense Control",
   description: "Gerencie suas finanças de forma intuitiva e simples.",
 };
 

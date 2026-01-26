@@ -172,7 +172,7 @@ export function exportToPDF(transactions: Transaction[], month: number, year: nu
       </style>
     </head>
     <body>
-      <h1>XPensive Control - Relatório Financeiro</h1>
+      <h1>XPense Control - Relatório Financeiro</h1>
       <p><strong>Período:</strong> ${monthNames[month - 1]} de ${year}</p>
       
       <div class="summary">
@@ -239,7 +239,7 @@ export function exportToPDF(transactions: Transaction[], month: number, year: nu
       
       <div class="footer">
         <p>Relatório gerado em ${new Date().toLocaleString("pt-BR")}</p>
-        <p>XPensive Control - Seu controle financeiro pessoal</p>
+        <p>XPense Control - Seu controle financeiro pessoal</p>
       </div>
     </body>
     </html>

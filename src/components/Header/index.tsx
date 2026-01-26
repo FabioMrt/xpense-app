@@ -40,7 +40,7 @@ import { ThemeToggle } from "@/components/ThemeToggle"
             <span className="text-white font-bold text-lg">XP</span>
         </div>
         <h1 className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">
-            <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">XPensive</span>
+            <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">XPense</span>
             {" "}Control
         </h1>
         </Link>

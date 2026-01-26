@@ -137,7 +137,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className="text-xl text-purple-100 max-w-2xl mx-auto lg:mx-0"
                 >
-                  Transforme sua vida financeira com o XPensive Control. 
+                  Transforme sua vida financeira com o XPense Control. 
                   Controle gastos, monitore economias e alcance seus objetivos 
                   com uma plataforma moderna e intuitiva.
                 </motion.p>
@@ -284,7 +284,7 @@ export default function Home() {
               <span className="text-slate-900 dark:text-white">que fazem a diferença</span>
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              Descubra como o XPensive Control pode revolucionar sua gestão financeira
+              Descubra como o XPense Control pode revolucionar sua gestão financeira
             </p>
           </motion.div>
 
@@ -451,7 +451,7 @@ export default function Home() {
               <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-8">
                 Por que escolher o{" "}
                 <span className="bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
-                  XPensive Control
+                  XPense Control
                 </span>
                 ?
               </h2>

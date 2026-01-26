@@ -4,7 +4,7 @@ import { authOptions } from "@/lib/auth";
 import DashboardClientV2 from "@/components/DashboardClientV2";
 
 export const metadata = {
-  title: "Dashboard - XPensive Control",
+  title: "Dashboard - XPense Control",
   description: "Dashboard executivo de controle financeiro",
 };
 
